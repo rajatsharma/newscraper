@@ -1,6 +1,5 @@
 import * as cheerio from 'cheerio';
 import {CheerioAPI} from 'cheerio';
-import fs from 'node:fs/promises';
 
 class NewsListingAggregator {
     async getHTMLParser(link: string): Promise<CheerioAPI> {
@@ -11,7 +10,7 @@ class NewsListingAggregator {
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8'
             }
         }).then(res => res.text());
-        await fs.writeFile('response', response);
+
         return cheerio.load(response);
     }
 }

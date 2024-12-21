@@ -1,4 +1,4 @@
-import { NewsListEntry } from "./types";
+import {NewsListEntry} from "./types";
 import {NewsListingAggregator} from "./NewsListingAggregator";
 
 class HTListingAggregator extends NewsListingAggregator {
@@ -12,14 +12,16 @@ class HTListingAggregator extends NewsListingAggregator {
             const element = HTMLParser(el);
             let headline = element.find('h3').text().trim();
             let summary = element.find('h2').text().trim();
+
             if (headline === '') {
                 headline = summary;
                 summary = '';
             }
+
             const link = element.find('a').attr('href')!;
             const pic = element.find('figure').find('img').attr('data-src');
             if (link !== undefined) {
-                entries.push({ headline, pic, summary, link });
+                entries.push({headline, pic, summary, link});
             }
         });
 
@@ -30,11 +32,11 @@ class HTListingAggregator extends NewsListingAggregator {
         return entries;
     }
 
-    async getContents(link: string): Promise<{ image: string, text: string}>{
+    async getContents(link: string): Promise<{ image: string, text: string }> {
         const htmlContents = await this.getHTMLParser(this.baseUrl + link);
         const text = htmlContents('p').text();
         const image = htmlContents('#dataHolder picture').find('img').attr('src')!;
-        return { image, text };
+        return {image, text};
     }
 }
 
